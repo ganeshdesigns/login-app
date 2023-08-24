@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
 
@@ -18,6 +19,18 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func LoginClicked(_ sender: UIButton) {
+        guard let email = EmailTextField.text else { return }
+        guard let password = PasswordTextField.text else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { firebaseResult, error in
+            if let e = error {
+                print("error")
+            }
+            else {
+                // Go to our home screen
+                self .performSegue(withIdentifier: "Gotonext", sender: self)
+            }
+        }
     }
     
     /*
